@@ -1,17 +1,24 @@
 
-To build a example shopping app.
-
+To build a example chat app.
+```bash
+npm i;
+npm run serve;
 ```
+
+<kbd>goto<kbd/> http://localhost:3000
+
+
+
+
+start a mongodb atlas server
+
+
+## Start from scratch
+```bash
 npm init;
-```
-
-project: ./build/app.js
-```
 npm install express mongoose apollo-server-express graphql class-validator type-graphql reflect-metadata @typegoose/typegoose --save;
 npm install @types/express @types/mongoose --save-dev;
 ```
-
-
 typescript config file.
 ```json
 {
@@ -70,6 +77,3 @@ ng serve;
 mkdir schema;
 mkdir server;
 ```
-
-
-start a mongodb atlas server
