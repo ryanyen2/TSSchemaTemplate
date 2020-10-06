@@ -39,7 +39,7 @@ ng serve;
 ```json
 {
 	"projects": {
-		"ui" {
+		"ui": {
 			"architect": {
 				"build": {
 					"options": {
