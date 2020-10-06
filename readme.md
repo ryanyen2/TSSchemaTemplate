@@ -5,7 +5,7 @@ npm i;
 npm run serve;
 ```
 
-<kbd>goto<kbd/> http://localhost:3000
+<kbd>goto</kbd> http://localhost:3000
 
 
 
