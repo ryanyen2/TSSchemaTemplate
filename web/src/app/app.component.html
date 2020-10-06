@@ -1,0 +1,437 @@
+<div class="app_root">
+  <div class="chat">
+    <div *ngFor="let chat of chats">
+      <p>{{ chat.author }}</p>
+      <pre>{{ chat.text }}</pre>
+    </div>
+  </div>
+  <p>Chat as: <input type="text" /> Password: <input type='password'/><input type="button" value="Sign in" (click)='login()'></p>
+  <hr />
+  <textarea
+    autofocus=""
+    spellcheck="false"
+    #chatInputEl
+    (keyup.enter)="addChat(chatInputEl)"
+  ></textarea>
+</div>
+
+<!-- <script src="../assets/browser-polyfill.min.js"></script> -->
+<!-- <style type="text/css">
+  @charset "utf-8";
+  ::selection {
+    background: rgba(255, 255, 255, 0.996);
+    color: #000;
+  }
+  html,
+  body,
+  :root {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    font-family: "Fira Code";
+  }
+  * {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    box-sizing: border-box;
+    text-rendering: optimizeLegibility;
+  }
+  *.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  *.noselect {
+    user-select: none;
+  }
+  *.nodisplay {
+    display: none;
+  }
+  *.nodrag {
+    user-drag: none;
+    -webkit-user-drag: none;
+  }
+  *.container {
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .container {
+    flex-direction: column;
+    overflow: hidden;
+  }
+  section.bar {
+    height: 40px;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    font-size: 16px;
+    border-top: 1px solid #fff;
+    z-index: 4;
+  }
+  section.bar #lastEdited {
+    position: absolute;
+    right: 0;
+    border-left: 1px solid #fff;
+    line-height: 40px;
+    padding: 0 10px;
+    cursor: pointer;
+  }
+  section.bar #lastEdited:hover::after {
+    content: "CLICK TO VIEW REVISION HISTORY";
+    position: absolute;
+    font-size: 12px;
+    color: #ccc;
+    top: -100%;
+    left: -1px;
+    text-align: center;
+    width: 100%;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    white-space: nowrap;
+  }
+  section.bar .button {
+    padding: 0;
+    height: 100%;
+    width: 40px;
+    position: absolute;
+    left: 0;
+  }
+  section.main {
+    height: 100%;
+    width: 100%;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    font-size: 20px;
+    transition: 0.1s all linear;
+  }
+  section.main textarea,
+  section.main .markdown-body {
+    background: inherit;
+    border: none;
+    height: 100%;
+    max-width: 1000px;
+    width: 95%;
+    padding: 5vh;
+    color: #fff;
+    line-height: 1.4em;
+    outline: none;
+    resize: none;
+    overflow-y: auto;
+  }
+  section.main textarea::-webkit-scrollbar,
+  section.main .markdown-body::-webkit-scrollbar {
+    width: 15px;
+    background: #000;
+  }
+  section.main textarea::-webkit-scrollbar-thumb,
+  section.main .markdown-body::-webkit-scrollbar-thumb {
+    background: #000;
+    border: 1px solid #fff;
+  }
+  section.main textarea {
+    font-size: 18px;
+    font-family: "Fira Code";
+    letter-spacing: 0.5px;
+  }
+  section.main.blur {
+    filter: blur(3px);
+    user-select: none;
+  }
+  section.main.noblur {
+    filter: blur(0px);
+    user-select: default;
+  }
+  .buttons {
+    flex-direction: column;
+    margin: 5vh 0 0 2vh;
+  }
+  .button {
+    cursor: pointer;
+    padding: 10px;
+    font-family: monospace;
+  }
+  .button img {
+    cursor: pointer;
+    height: 20px;
+    width: auto;
+  }
+  .button:hover {
+    outline: 1px solid #fff;
+  }
+  section.history,
+  section.settings {
+    height: 80vh;
+    max-width: 1200px;
+    width: 95%;
+    border: 1px solid #fff;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    top: 5vh;
+    color: #fff;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  section.history .header,
+  section.settings .header {
+    width: 100%;
+    padding: 20px;
+    cursor: move;
+    cursor: -webkit-grab;
+    border-bottom: 1px solid #333;
+  }
+  section.history .header h1,
+  section.settings .header h1 {
+    font-size: 35px;
+    text-align: center;
+    font-weight: 100;
+    flex: 1;
+  }
+  section.history .header .close,
+  section.settings .header .close {
+    cursor: pointer;
+    padding: 10px;
+    font-family: monospace;
+  }
+  section.history .header .close img,
+  section.settings .header .close img {
+    cursor: pointer;
+    height: 20px;
+    width: auto;
+  }
+  section.history .header .close:hover,
+  section.settings .header .close:hover {
+    outline: 1px solid #fff;
+  }
+  section.history.z-index-2,
+  section.settings.z-index-2 {
+    z-index: 2;
+  }
+  section.history.z-index-3,
+  section.settings.z-index-3 {
+    z-index: 3;
+  }
+  section.history .list {
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    overflow-y: scroll;
+  }
+  section.history .list::-webkit-scrollbar {
+    width: 15px;
+    background: #000;
+  }
+  section.history .list::-webkit-scrollbar-thumb {
+    background: #000;
+    border: 1px solid #fff;
+    border-right: none;
+  }
+  section.history .item {
+    width: 100%;
+    margin: 40px 0 0 0;
+  }
+  section.history .item textarea {
+    width: 100%;
+    height: 50vh;
+    background: rgba(17, 17, 17, 0.6);
+    border-radius: 7px;
+    overflow-y: scroll;
+    padding: 20px;
+    resize: none;
+    outline: none;
+    color: #fff;
+    font-family: "Fira Code";
+    font-size: 16px;
+    border: none;
+    margin: 0;
+  }
+  section.history .item textarea::-webkit-scrollbar {
+    width: 10px;
+    background: #000;
+  }
+  section.history .item textarea::-webkit-scrollbar-thumb {
+    background: #000;
+    border: 1px solid #fff;
+  }
+  section.history .item .markdown-body {
+    padding: 20px;
+    background: rgba(17, 17, 17, 0.6);
+    border-radius: 7px;
+    max-height: 50vh;
+    overflow-y: scroll;
+  }
+  section.history .item .markdown-body::-webkit-scrollbar {
+    width: 10px;
+    background: #000;
+  }
+  section.history .item .markdown-body::-webkit-scrollbar-thumb {
+    background: #000;
+    border: 1px solid #fff;
+  }
+  section.history .item p {
+    font-size: 16px;
+  }
+  section.history .item p.id {
+    color: #bbb;
+    display: inline;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  section.history .item p.date {
+    display: inline;
+    padding-left: 20px;
+    font-weight: bold;
+    font-size: 23px;
+  }
+  section.history .item .label {
+    padding-bottom: 20px;
+    justify-content: space-between;
+  }
+  section.settings .body {
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+  }
+  section.settings .body::-webkit-scrollbar {
+    width: 15px;
+    background: #000;
+  }
+  section.settings .body::-webkit-scrollbar-thumb {
+    background: #000;
+    border: 1px solid #fff;
+    border-right: none;
+  }
+  section.settings .item {
+    padding: 25px 40px;
+    border-bottom: 1px solid #333;
+    cursor: pointer;
+  }
+  section.settings .item .main {
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    flex: 1;
+  }
+  section.settings .item .main label {
+    font-size: 24px;
+    line-height: 1;
+  }
+  section.settings .item .main p {
+    font-size: 16px;
+    color: #bbb;
+    margin-top: 10px;
+    margin-right: 20px;
+  }
+  section.settings .item.dateFormat,
+  section.settings .item.customCss {
+    cursor: default;
+  }
+  section.settings .item.dateFormat a,
+  section.settings .item.customCss a {
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  section.settings .item.dateFormat a:hover,
+  section.settings .item.customCss a:hover {
+    text-decoration: underline;
+  }
+  section.settings .item.dateFormat form,
+  section.settings .item.customCss form {
+    margin: 5px -10px;
+    width: 100%;
+  }
+  section.settings .item.dateFormat input,
+  section.settings .item.customCss input {
+    margin: 10px;
+    background: none;
+    border: 1px solid #fff;
+    padding: 5px 10px;
+    font-size: 16px;
+    font-family: "Fira Code";
+    color: #fff;
+    outline: none;
+  }
+  section.settings .item.dateFormat input[type="text"],
+  section.settings .item.customCss input[type="text"] {
+    width: 300px;
+  }
+  section.settings .item.dateFormat input[type="submit"],
+  section.settings .item.customCss input[type="submit"] {
+    cursor: pointer;
+  }
+  section.settings .item.dateFormat input[type="submit"].saved,
+  section.settings .item.customCss input[type="submit"].saved {
+    border-color: #008000;
+  }
+  section.settings .item.dateFormat input:hover,
+  section.settings .item.customCss input:hover,
+  section.settings .item.dateFormat input:active,
+  section.settings .item.customCss input:active,
+  section.settings .item.dateFormat input:focus,
+  section.settings .item.customCss input:focus {
+    outline: none;
+  }
+  section.settings .item.dateFormat textarea,
+  section.settings .item.customCss textarea {
+    display: block;
+    width: 100%;
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, Courier,
+      monospace;
+    line-height: 1.5;
+    resize: vertical;
+    -moz-tab-size: 4 !important;
+    tab-size: 4 !important;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-left: 10px;
+    background: #000;
+    border: 1px solid #fff;
+    box-shadow: none;
+    color: #fff;
+    padding: 5px;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  section.settings .item .switch {
+    height: 30px;
+    width: 30px;
+    border: 2px solid #fff;
+    align-items: center;
+  }
+  section.settings .item .switch .box {
+    height: 20px;
+    width: 20px;
+    transition: 0.2s all linear;
+  }
+  section.settings .item.on .box {
+    background: #fff;
+  }
+  section.settings .item.off .box {
+    background: none;
+  }</style
+><style>
+  * {
+    font-family: "Fira Code";
+    font-size: 18px;
+  }
+  .markdown-body h1 {
+    font-size: 20px;
+    font-weight: normal;
+  }
+
+  .markdown-body h2,
+  .markdown-body h3 {
+    font-size: 19px;
+    font-weight: normal;
+  }
+</style> -->
+<!-- <body class="flex"></body><div class="container flex"><section class="main flex noblur">
+    <textarea autofocus="" spellcheck="false" class="nodisplay"></textarea>
+    <div class="markdown-body"><p>Today is Tuesday October 6</p></div><div class="buttons flex noselect"><div class="button" id="edit"><img class="nodrag" src="../assets/images/edit.svg"></div><div class="button nodisplay" id="save"><img class="nodrag" src="../assets/images/save.svg"></div></div></section><section class="history flex nodisplay"><div class="header flex"><h1>Revision History</h1><div class="noselect close" id="closeHistory"><img class="nodrag" src="../assets/images/close.svg"></div></div><div class="list"></div></section><section class="settings flex z-index-2 nodisplay" style="top: 48px; left: 240px;"><div class="header flex"><h1>Settings</h1><div class="noselect close" id="closeSettings"><img class="nodrag" src="../assets/images/close.svg"></div></div><div class="body noselect"><div class="item flex on" data-setting="saveHistory"><div class="main flex"><label>Save Revision History</label><p>If disabled, saving of revision history will be paused.<br>Saved revisions will still be viewable.</p></div><div class="switch flex"><div class="box"></div></div></div><div class="item flex on" data-setting="cursorLastPosition"><div class="main flex"><label>Save Cursor Position</label><p>Start editing where you left off last time you saved the document. If disable, cursor is always positioned at the start.</p></div><div class="switch flex"><div class="box"></div></div></div><div class="item flex off" data-setting="returnKeyToggle"><div class="main flex"><label>Use ⌘/^ + ↵ for editing and saving</label><p>Instead of saving and editing with ⌘/^ + S and ⌘/^ + X respectively, use ⌘/^ + ↵ (return/enter key) for toggling edit and save modes.</p></div><div class="switch flex"><div class="box"></div></div></div><div class="item flex off" data-setting="enablePowerMode"><div class="main flex"><label>Enable POWER MODE</label><p>When typing, display animated particles thrown out from the cursor</p></div><div class="switch flex"><div class="box"></div></div></div><div class="item dateFormat flex" data-setting="dateFormat"><div class="main flex"><label>Date Format</label><p>Customise date/time format to be displayed on the bottom of the window. Refer to <a href="https://github.com/felixge/node-dateformat#mask-options">this table</a>&nbsp;to see how to properly format (refresh page to see the changes)</p><form><input type="text" name="dateFormat" placeholder="dd/mm/yyyy - HH:MM:ss"><input type="submit" name="submit" value="Save"></form></div></div><div class="item customCss flex off" data-setting="customCss"><div class="main flex"><label>Custom CSS</label><p>Add custom CSS that will override current page styles</p><form><textarea name="dateFormat" placeholder="Custom CSS" rows="5"></textarea><input type="submit" name="submit" value="Save"></form></div></div></div></section><section class="bar flex noselect"><div class="button flex" id="settings"><img class="nodrag" src="../assets/images/settings.svg"></div><p id="time">Tuesday, October 6, 2020</p><p id="lastEdited">Last edited: 4 minutes ago</p></section></div><script type="text/javascript" src="../assets/index.js"></script><script src="activate-power-mode.js"></script><canvas width="1172" height="948" style="position: fixed; top: 0px; left: 0px; pointer-events: none; z-index: 999999;"></canvas> -->
