@@ -1,4 +1,4 @@
-import { User } from './../../../schema/user/user';
+import { User } from './../../../schema/user';
 import { Injectable } from '@angular/core';
 
 @Injectable({

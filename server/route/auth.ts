@@ -1,4 +1,4 @@
-import type { User } from './../../schema/user/user';
+import type { User } from './../../schema/user';
 
 
 // Trying to resolve the type for this auth checker is very sophisticated, I suggest you find me.

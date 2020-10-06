@@ -1,4 +1,4 @@
-import { User } from './../../../schema/user/user';
+import { User } from './../../../schema/user';
 import { getModelForClass } from '@typegoose/typegoose';
 import { Arg, Int, Mutation, Query, Resolver, Ctx, Authorized, Root, FieldResolver } from "type-graphql";
 

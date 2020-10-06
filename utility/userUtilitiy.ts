@@ -1,4 +1,4 @@
-import type { User } from './../schema/user/user';
+import type { User } from './../schema/user';
 
 export default function maleProbability(user: Partial<User>): number{
 	if (!user.age) {
